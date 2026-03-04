@@ -28,7 +28,10 @@ import { writeFileSync } from 'node:fs'
 // }
 
 const CONTENT_TYPE_NAMES: Record<string, string> = {
-  dynamicPage: 'TDynamicPage'
+  dynamicPage: 'TDynamicPage',
+  blockWrapper: 'TBlockWrapper',
+  faqs: 'TFaqs',
+  hero: 'THero',
 }
 
 const CONTENT_TYPE_IDS = Object.keys(CONTENT_TYPE_NAMES)
