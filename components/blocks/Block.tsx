@@ -9,33 +9,22 @@ interface BlockProps {
 
 export function Block({ block }: BlockProps) {
   const content = block.fields.content as unknown as THero | TFaqs | TGenericContentColumns
+  const centerVertically = (block.fields as Record<string, unknown>).centerVertically as
+    | boolean
+    | undefined
 
   // Determina o tipo de conteúdo e renderiza o componente certo
   if (!content) {
     return null
   }
 
-  // Verifica qual é o tipo de conteúdo
-  const isFaqs =
-    content &&
-    'fields' in content &&
-    content.fields &&
-    'items' in (content.fields as Record<string, unknown>) &&
-    !('subtitle' in (content.fields as Record<string, unknown>))
+  // Verifica qual é o tipo de conteúdo usando o content type ID
+  const sys = (content as { sys?: { contentType?: { sys?: { id?: string } } } }).sys
+  const contentTypeId = sys?.contentType?.sys?.id || ''
 
-  const isHero =
-    content &&
-    'fields' in content &&
-    content.fields &&
-    'title' in (content.fields as Record<string, unknown>) &&
-    'backgroundImage' in (content.fields as Record<string, unknown>)
-
-  const isGenericColumns =
-    content &&
-    'fields' in content &&
-    content.fields &&
-    'items' in (content.fields as Record<string, unknown>) &&
-    'subtitle' in (content.fields as Record<string, unknown>)
+  const isHero = contentTypeId === 'hero'
+  const isFaqs = contentTypeId === 'faqs'
+  const isGenericColumns = contentTypeId === 'genericContentColumns'
 
   let blockType = 'Unknown'
   let badgeColor = 'bg-gray-500'
@@ -51,8 +40,10 @@ export function Block({ block }: BlockProps) {
     badgeColor = 'bg-amber-500'
   }
 
+  const centerClasses = centerVertically ? 'flex items-center justify-center' : ''
+
   return (
-    <div className='w-full h-full relative'>
+    <div className={`w-full h-full relative ${centerClasses}`}>
       <div
         className={`absolute top-2 right-2 z-10 ${badgeColor} text-white text-xs font-semibold px-2 py-1 rounded`}>
         {blockType}

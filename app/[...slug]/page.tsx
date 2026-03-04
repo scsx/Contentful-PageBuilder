@@ -102,7 +102,7 @@ export default async function DynamicPage({ params }: DynamicPageProps) {
                 const pbClass = paddingBottomMap[paddingBottom || 'm'] || 'padding-bottom-m'
 
                 return (
-                  <div key={`row-${rowIndex}`} className={`w-full ${bgClass}`}>
+                  <div key={`row-${rowIndex}`} className={`block-row w-full ${bgClass}`}>
                     <div className={`container relative ${ptClass} ${pbClass}`}>
                       <div className='flex flex-wrap gap-8 items-stretch'>
                         {row.map((block: TBlockWrapper, blockIndex: number) => {
@@ -114,10 +114,8 @@ export default async function DynamicPage({ params }: DynamicPageProps) {
                             <div
                               key={`${block.sys.id}-${blockIndex}`}
                               style={{ width: widthStyle, minWidth: 0 }}
-                              className='flex flex-shrink-0'>
-                              <div className='w-full'>
-                                <Block block={block} />
-                              </div>
+                              className='block-wrapper flex flex-shrink-0'>
+                              <Block block={block} />
                             </div>
                           )
                         })}
