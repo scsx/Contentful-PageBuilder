@@ -14,6 +14,16 @@ type DynamicPageProps = {
 
 type BlockWidth = '1/3' | '1/2' | '2/3' | 'Full' | undefined
 
+function getWidthPercentage(width: BlockWidth): string {
+  const widthMap: Record<string, string> = {
+    '1/3': 'calc(33.333% - 1.333rem)',
+    '1/2': 'calc(50% - 1rem)',
+    '2/3': 'calc(66.666% - 1.333rem)',
+    Full: '100%'
+  }
+  return widthMap[width || 'Full'] || '100%'
+}
+
 function getWidthFraction(width: BlockWidth): number {
   const fractions: Record<string, number> = {
     '1/3': 1 / 3,
@@ -22,35 +32,6 @@ function getWidthFraction(width: BlockWidth): number {
     Full: 1
   }
   return fractions[width || 'Full'] || 1
-}
-
-function getGridTemplate(widths: BlockWidth[]): string {
-  const fractionSum = widths.reduce((sum, w) => sum + getWidthFraction(w), 0)
-
-  if (fractionSum === 1) {
-    const counts: Record<string, number> = { '1/3': 0, '1/2': 0, '2/3': 0 }
-    widths.forEach((w) => {
-      if (w && w !== 'Full') counts[w]++
-    })
-
-    if (counts['1/3'] === 3) return 'grid-cols-3'
-    if (counts['1/2'] === 2) return 'grid-cols-2'
-    if (counts['2/3'] === 1 && counts['1/3'] === 1) return 'grid-cols-3'
-  }
-
-  return 'grid-cols-1'
-}
-
-function getColSpan(width: BlockWidth, gridCols: string): string {
-  if (width === 'Full') return 'col-span-full'
-  if (gridCols === 'grid-cols-3') {
-    if (width === '2/3') return 'col-span-2'
-    if (width === '1/3') return 'col-span-1'
-  }
-  if (gridCols === 'grid-cols-2') {
-    if (width === '1/2') return 'col-span-1'
-  }
-  return 'col-span-1'
 }
 
 function groupBlocksByRow(blocks: TBlockWrapper[]): TBlockWrapper[][] {
@@ -106,26 +87,25 @@ export default async function DynamicPage({ params }: DynamicPageProps) {
           {Array.isArray(page.fields.blocks) &&
           (page.fields.blocks as TBlockWrapper[]).length > 0 ? (
             groupBlocksByRow(page.fields.blocks as TBlockWrapper[]).map(
-              (row: TBlockWrapper[], rowIndex: number) => {
-                const widths = row.map(
-                  (b) => (b.fields as Record<string, unknown>).width as BlockWidth
-                )
-                const gridTemplate = getGridTemplate(widths)
-                return (
-                  <div key={`row-${rowIndex}`} className={`grid gap-8 ${gridTemplate}`}>
-                    {row.map((block: TBlockWrapper, blockIndex: number) => {
-                      const blockWidth = (block.fields as Record<string, unknown>)
-                        .width as BlockWidth
-                      const colSpan = getColSpan(blockWidth, gridTemplate)
-                      return (
-                        <div key={`${block.sys.id}-${blockIndex}`} className={colSpan}>
+              (row: TBlockWrapper[], rowIndex: number) => (
+                <div key={`row-${rowIndex}`} className='flex flex-wrap gap-8 items-stretch'>
+                  {row.map((block: TBlockWrapper, blockIndex: number) => {
+                    const blockWidth = (block.fields as Record<string, unknown>).width as BlockWidth
+                    const widthStyle = getWidthPercentage(blockWidth)
+
+                    return (
+                      <div
+                        key={`${block.sys.id}-${blockIndex}`}
+                        style={{ width: widthStyle, minWidth: 0 }}
+                        className='flex flex-1'>
+                        <div className='w-full'>
                           <Block block={block} />
                         </div>
-                      )
-                    })}
-                  </div>
-                )
-              }
+                      </div>
+                    )
+                  })}
+                </div>
+              )
             )
           ) : (
             <p className='text-gray-500 dark:text-gray-400'>Sem blocks</p>

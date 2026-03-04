@@ -60,8 +60,8 @@ export function GenericColumns({ data }: GenericColumnsProps) {
   const items = Array.isArray(fields?.items) ? (fields.items as ColumnItem[]) : []
 
   return (
-    <div className='w-full'>
-      <div className='text-center my-8'>
+    <div className='w-full h-full flex flex-col'>
+      <div className='text-center my-8 flex-shrink-0'>
         {title && (
           <Heading as='h2' fontSize='fontSize4Xl' className='mb-4'>
             {title}
@@ -74,7 +74,8 @@ export function GenericColumns({ data }: GenericColumnsProps) {
         )}
       </div>
 
-      <div className={`grid gap-8 ${getGridColsClass(items.length)}`}>
+      <div
+        className={`grid gap-8 flex-1 ${getGridColsClass(items.length)}`}>
         {items && items.length > 0 ? (
           items.map((item: ColumnItem, index) => {
             const itemFields = item.fields as Record<string, unknown> | undefined

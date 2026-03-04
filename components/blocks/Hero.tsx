@@ -31,7 +31,7 @@ export function Hero({ data }: HeroProps) {
 
   return (
     <div
-      className='relative w-full min-h-96 rounded-lg overflow-hidden bg-gray-200 dark:bg-gray-800 flex items-center justify-center'
+      className='relative min-h-96 w-full h-full rounded-lg overflow-hidden bg-gray-200 dark:bg-gray-800 flex items-center justify-center'
       style={{
         backgroundImage:
           backgroundImage && typeof backgroundImage === 'object' && 'fields' in backgroundImage

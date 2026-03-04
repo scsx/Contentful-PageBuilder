@@ -10,8 +10,6 @@ interface BlockProps {
 export function Block({ block }: BlockProps) {
   const content = block.fields.content as unknown as THero | TFaqs | TGenericContentColumns
 
-  console.log(content)
-
   // Determina o tipo de conteúdo e renderiza o componente certo
   if (!content) {
     return null
@@ -40,8 +38,26 @@ export function Block({ block }: BlockProps) {
     'title' in (content.fields as Record<string, unknown>) &&
     !('backgroundImage' in (content.fields as Record<string, unknown>))
 
+  let blockType = 'Unknown'
+  let badgeColor = 'bg-gray-500'
+
+  if (isHero) {
+    blockType = 'Hero'
+    badgeColor = 'bg-blue-500'
+  } else if (isFaqs) {
+    blockType = 'FAQs'
+    badgeColor = 'bg-purple-500'
+  } else if (isGenericColumns) {
+    blockType = 'Columns'
+    badgeColor = 'bg-amber-500'
+  }
+
   return (
-    <div className='w-full'>
+    <div className='w-full h-full relative'>
+      <div
+        className={`absolute top-2 right-2 z-10 ${badgeColor} text-white text-xs font-semibold px-2 py-1 rounded`}>
+        {blockType}
+      </div>
       {isHero && <Hero data={content as THero} />}
       {isFaqs && <Faqs data={content as TFaqs} />}
       {isGenericColumns && <GenericColumns data={content as TGenericContentColumns} />}
