@@ -9,6 +9,8 @@ interface BlockProps {
 export function Block({ block }: BlockProps) {
   const content = block.fields.content as unknown as THero | TFaqs
 
+  console.log(content)
+
   // Determina o tipo de conteúdo e renderiza o componente certo
   if (!content) {
     return null

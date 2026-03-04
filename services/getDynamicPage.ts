@@ -11,7 +11,8 @@ export async function getDynamicPage(slug: string): Promise<TDynamicPage | null>
     const response = await contentfulClient.getEntries({
       content_type: 'dynamicPage',
       'fields.slug': slug,
-      limit: 1
+      limit: 1,
+      include: 3
     })
 
     if (response.items.length === 0) {

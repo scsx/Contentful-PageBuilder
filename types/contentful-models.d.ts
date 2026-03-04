@@ -1,7 +1,7 @@
 /* ============================================================================
  * Auto-generated from Contentful Content Models using scripts/generate-types.ts
  * 
- * Generated at: 2026-03-04T02:31:49.019Z
+ * Generated at: 2026-03-04T03:04:01.072Z
  * Space ID: zh8lljn49bf0
  * Environment: master
  * 
@@ -42,6 +42,7 @@ export type EntryLink<T> = {
 export type TBlockWrapperFields = {
   name: string;
   content: TFaqs | THeroEntry<L>;
+  width?: "1/3" | "1/2" | "2/3" | "Full";
 };
 
 
