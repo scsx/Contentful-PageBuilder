@@ -1,6 +1,7 @@
 import { notFound } from 'next/navigation'
 import { Block } from '@/components/blocks/Block'
 import { getDynamicPage } from '@/services/getDynamicPage'
+import { paddingTopMap, paddingBottomMap, colorClassMap } from '@/lib/blockStyleMaps'
 import type { TDynamicPage, TBlockWrapper } from '@/types/contentful-models'
 
 // Usado para pre-render no build
@@ -87,25 +88,44 @@ export default async function DynamicPage({ params }: DynamicPageProps) {
           {Array.isArray(page.fields.blocks) &&
           (page.fields.blocks as TBlockWrapper[]).length > 0 ? (
             groupBlocksByRow(page.fields.blocks as TBlockWrapper[]).map(
-              (row: TBlockWrapper[], rowIndex: number) => (
-                <div key={`row-${rowIndex}`} className='flex flex-wrap gap-8 items-stretch'>
-                  {row.map((block: TBlockWrapper, blockIndex: number) => {
-                    const blockWidth = (block.fields as Record<string, unknown>).width as BlockWidth
-                    const widthStyle = getWidthPercentage(blockWidth)
+              (row: TBlockWrapper[], rowIndex: number) => {
+                const firstBlock = row[0]
+                const backgroundColour = (firstBlock.fields as Record<string, unknown>)
+                  .backgroundColour as string | undefined
+                const paddingTop = (firstBlock.fields as Record<string, unknown>).paddingTop as
+                  | string
+                  | undefined
+                const paddingBottom = (firstBlock.fields as Record<string, unknown>)
+                  .paddingBottom as string | undefined
+                const bgClass = colorClassMap[backgroundColour || 'white'] || 'bg-white'
+                const ptClass = paddingTopMap[paddingTop || 'm'] || 'padding-top-m'
+                const pbClass = paddingBottomMap[paddingBottom || 'm'] || 'padding-bottom-m'
 
-                    return (
-                      <div
-                        key={`${block.sys.id}-${blockIndex}`}
-                        style={{ width: widthStyle, minWidth: 0 }}
-                        className='flex flex-shrink-0'>
-                        <div className='w-full'>
-                          <Block block={block} />
-                        </div>
+                return (
+                  <div key={`row-${rowIndex}`} className={`w-full ${bgClass}`}>
+                    <div className={`container relative ${ptClass} ${pbClass}`}>
+                      <div className='flex flex-wrap gap-8 items-stretch'>
+                        {row.map((block: TBlockWrapper, blockIndex: number) => {
+                          const blockWidth = (block.fields as Record<string, unknown>)
+                            .width as BlockWidth
+                          const widthStyle = getWidthPercentage(blockWidth)
+
+                          return (
+                            <div
+                              key={`${block.sys.id}-${blockIndex}`}
+                              style={{ width: widthStyle, minWidth: 0 }}
+                              className='flex flex-shrink-0'>
+                              <div className='w-full'>
+                                <Block block={block} />
+                              </div>
+                            </div>
+                          )
+                        })}
                       </div>
-                    )
-                  })}
-                </div>
-              )
+                    </div>
+                  </div>
+                )
+              }
             )
           ) : (
             <p className='text-gray-500 dark:text-gray-400'>Sem blocks</p>
