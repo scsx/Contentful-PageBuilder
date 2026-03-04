@@ -31,7 +31,7 @@ const CONTENT_TYPE_NAMES: Record<string, string> = {
   dynamicPage: 'TDynamicPage',
   blockWrapper: 'TBlockWrapper',
   faqs: 'TFaqs',
-  hero: 'THero',
+  hero: 'THero'
 }
 
 const CONTENT_TYPE_IDS = Object.keys(CONTENT_TYPE_NAMES)
@@ -245,7 +245,7 @@ async function generateTypes(): Promise<void> {
     }
 
     // 3. Iniciar chunks com cabeçalho
-    const header = generateHeader(SPACE_ID!, ENV)
+    const header = generateHeader(SPACE_ID, ENV)
     const chunks: string[] = [header]
 
     // 4. Gerar tipos para cada content type
