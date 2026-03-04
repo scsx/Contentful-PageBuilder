@@ -97,7 +97,7 @@ export default async function DynamicPage({ params }: DynamicPageProps) {
                       <div
                         key={`${block.sys.id}-${blockIndex}`}
                         style={{ width: widthStyle, minWidth: 0 }}
-                        className='flex flex-1'>
+                        className='flex flex-shrink-0'>
                         <div className='w-full'>
                           <Block block={block} />
                         </div>
