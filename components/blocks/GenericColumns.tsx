@@ -74,8 +74,7 @@ export function GenericColumns({ data }: GenericColumnsProps) {
         )}
       </div>
 
-      <div
-        className={`grid gap-8 flex-1 ${getGridColsClass(items.length)}`}>
+      <div className={`grid gap-8 flex-1 ${getGridColsClass(items.length)}`}>
         {items && items.length > 0 ? (
           items.map((item: ColumnItem, index) => {
             const itemFields = item.fields as Record<string, unknown> | undefined

@@ -1,7 +1,7 @@
 /* ============================================================================
  * Auto-generated from Contentful Content Models using scripts/generate-types.ts
  * 
- * Generated at: 2026-03-04T12:25:35.348Z
+ * Generated at: 2026-03-04T17:59:04.451Z
  * Space ID: zh8lljn49bf0
  * Environment: master
  * 
@@ -39,6 +39,48 @@ export type EntryLink<T> = {
 // ============================================================================
 
 
+export type TBlockWrapperFields = {
+  name: string;
+  content: EntryLink<unknown>;
+  width?: "1/3" | "1/2" | "2/3" | "Full";
+  backgroundColour?: "none" | "white" | "primary" | "secondary" | "alternative" | "neutral";
+  backgroundImage?: AssetLink;
+  paddingTop?: "none" | "xs" | "s" | "m" | "l" | "xl";
+  paddingBottom?: "none" | "xs" | "s" | "m" | "l" | "xl";
+};
+
+
+export type TBlockWrapperEntrySkeleton = EntrySkeletonType<
+  TBlockWrapperFields,
+  'blockWrapper'
+>;
+
+
+export type TBlockWrapperEntry<L extends string = 'pt-PT'> =
+  Entry<TBlockWrapperEntrySkeleton, undefined, L>;
+
+export type TBlockWrapper = TBlockWrapperEntry<'pt-PT'>;
+
+
+export type TFaqsFields = {
+  name: string;
+  title?: string;
+  items: EntryLink<unknown>[];
+};
+
+
+export type TFaqsEntrySkeleton = EntrySkeletonType<
+  TFaqsFields,
+  'faqs'
+>;
+
+
+export type TFaqsEntry<L extends string = 'pt-PT'> =
+  Entry<TFaqsEntrySkeleton, undefined, L>;
+
+export type TFaqs = TFaqsEntry<'pt-PT'>;
+
+
 export type TGenericContentColumnsFields = {
   name: string;
   title?: string;
@@ -57,25 +99,6 @@ export type TGenericContentColumnsEntry<L extends string = 'pt-PT'> =
   Entry<TGenericContentColumnsEntrySkeleton, undefined, L>;
 
 export type TGenericContentColumns = TGenericContentColumnsEntry<'pt-PT'>;
-
-
-export type TBlockWrapperFields = {
-  name: string;
-  content: TFaqs | THeroEntry<L>;
-  width?: "1/3" | "1/2" | "2/3" | "Full";
-};
-
-
-export type TBlockWrapperEntrySkeleton = EntrySkeletonType<
-  TBlockWrapperFields,
-  'blockWrapper'
->;
-
-
-export type TBlockWrapperEntry<L extends string = 'pt-PT'> =
-  Entry<TBlockWrapperEntrySkeleton, undefined, L>;
-
-export type TBlockWrapper = TBlockWrapperEntry<'pt-PT'>;
 
 
 export type TDynamicPageFields = {
@@ -116,21 +139,3 @@ export type THeroEntry<L extends string = 'pt-PT'> =
   Entry<THeroEntrySkeleton, undefined, L>;
 
 export type THero = THeroEntry<'pt-PT'>;
-
-
-export type TFaqsFields = {
-  name: string;
-  items: EntryLink<unknown>[];
-};
-
-
-export type TFaqsEntrySkeleton = EntrySkeletonType<
-  TFaqsFields,
-  'faqs'
->;
-
-
-export type TFaqsEntry<L extends string = 'pt-PT'> =
-  Entry<TFaqsEntrySkeleton, undefined, L>;
-
-export type TFaqs = TFaqsEntry<'pt-PT'>;

@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import type { TFaqs } from '@/types/contentful-models'
-import { Accordion, Text } from '@contentful/f36-components'
+import { Accordion, Text, Heading } from '@contentful/f36-components'
 
 interface FaqItem {
   sys: {
@@ -21,36 +21,39 @@ interface FaqsProps {
 }
 
 export function Faqs({ data }: FaqsProps) {
-  const { items } = data.fields as Record<string, unknown>
+  const { items, title } = data.fields as Record<string, unknown>
   const itemsArray = Array.isArray(items) ? items : []
-  const [isHydrated, setIsHydrated] = useState(false)
+  const blockTitle = title ? String(title) : null
+  const [mounted, setMounted] = useState(false)
 
   useEffect(() => {
-    setIsHydrated(true)
+    setMounted(true)
   }, [])
 
-  // Renderiza um placeholder durante a hidratação para evitar mismatch
-  if (!isHydrated) {
-    return <div>{itemsArray.length > 0 ? 'Carregando...' : <p>Sem items</p>}</div>
+  if (!mounted) {
+    return <div>{blockTitle && <Heading>{blockTitle}</Heading>}</div>
   }
 
   return (
-    <Accordion>
-      {itemsArray && itemsArray.length > 0 ? (
-        itemsArray.map((item: FaqItem, index) => {
-          const itemFields = item.fields as Record<string, unknown> | undefined
-          const title = String(itemFields?.title || `FAQ ${index + 1}`)
-          const text = String(itemFields?.text || 'Sem descrição')
+    <div>
+      {blockTitle && <Heading>{blockTitle}</Heading>}
+      <Accordion>
+        {itemsArray && itemsArray.length > 0 ? (
+          itemsArray.map((item: FaqItem, index) => {
+            const itemFields = item.fields as Record<string, unknown> | undefined
+            const itemTitle = String(itemFields?.title || `FAQ ${index + 1}`)
+            const text = String(itemFields?.text || 'Sem descrição')
 
-          return (
-            <Accordion.Item key={`${item.sys.id}-${index}`} title={title}>
-              <Text>{text}</Text>
-            </Accordion.Item>
-          )
-        })
-      ) : (
-        <p>Sem items</p>
-      )}
-    </Accordion>
+            return (
+              <Accordion.Item key={`${item.sys.id}-${index}`} title={itemTitle}>
+                <Text>{text}</Text>
+              </Accordion.Item>
+            )
+          })
+        ) : (
+          <p>Sem items</p>
+        )}
+      </Accordion>
+    </div>
   )
 }

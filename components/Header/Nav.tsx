@@ -14,7 +14,7 @@ interface NavProps {
 export function Nav({ links }: NavProps) {
   return (
     <nav className='bg-black text-white'>
-      <div className='max-w-6xl mx-auto px-6 py-4 flex items-center justify-between'>
+      <div className='container py-4 flex items-center justify-between'>
         <Link href='/' className='text-2xl font-bold'>
           PB
         </Link>
