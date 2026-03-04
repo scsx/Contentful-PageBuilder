@@ -1,13 +1,14 @@
-import type { TBlockWrapper, THero, TFaqs } from '@/types/contentful-models'
+import type { TBlockWrapper, THero, TFaqs, TGenericContentColumns } from '@/types/contentful-models'
 import { Hero } from './Hero'
 import { Faqs } from './Faqs'
+import { GenericColumns } from './GenericColumns'
 
 interface BlockProps {
   readonly block: TBlockWrapper
 }
 
 export function Block({ block }: BlockProps) {
-  const content = block.fields.content as unknown as THero | TFaqs
+  const content = block.fields.content as unknown as THero | TFaqs | TGenericContentColumns
 
   console.log(content)
 
@@ -21,17 +22,29 @@ export function Block({ block }: BlockProps) {
     content &&
     'fields' in content &&
     content.fields &&
-    'items' in (content.fields as Record<string, unknown>)
+    'items' in (content.fields as Record<string, unknown>) &&
+    !('title' in (content.fields as Record<string, unknown>))
+
   const isHero =
     content &&
     'fields' in content &&
     content.fields &&
-    'title' in (content.fields as Record<string, unknown>)
+    'title' in (content.fields as Record<string, unknown>) &&
+    'backgroundImage' in (content.fields as Record<string, unknown>)
+
+  const isGenericColumns =
+    content &&
+    'fields' in content &&
+    content.fields &&
+    'items' in (content.fields as Record<string, unknown>) &&
+    'title' in (content.fields as Record<string, unknown>) &&
+    !('backgroundImage' in (content.fields as Record<string, unknown>))
 
   return (
     <div className='w-full'>
       {isHero && <Hero data={content as THero} />}
       {isFaqs && <Faqs data={content as TFaqs} />}
+      {isGenericColumns && <GenericColumns data={content as TGenericContentColumns} />}
     </div>
   )
 }

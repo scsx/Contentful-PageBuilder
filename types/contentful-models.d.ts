@@ -1,7 +1,7 @@
 /* ============================================================================
  * Auto-generated from Contentful Content Models using scripts/generate-types.ts
  * 
- * Generated at: 2026-03-04T03:04:01.072Z
+ * Generated at: 2026-03-04T12:25:35.348Z
  * Space ID: zh8lljn49bf0
  * Environment: master
  * 
@@ -37,6 +37,26 @@ export type EntryLink<T> = {
 // ============================================================================
 // GENERATED TYPES
 // ============================================================================
+
+
+export type TGenericContentColumnsFields = {
+  name: string;
+  title?: string;
+  subtitle?: string;
+  items: EntryLink<unknown>[];
+};
+
+
+export type TGenericContentColumnsEntrySkeleton = EntrySkeletonType<
+  TGenericContentColumnsFields,
+  'genericContentColumns'
+>;
+
+
+export type TGenericContentColumnsEntry<L extends string = 'pt-PT'> =
+  Entry<TGenericContentColumnsEntrySkeleton, undefined, L>;
+
+export type TGenericContentColumns = TGenericContentColumnsEntry<'pt-PT'>;
 
 
 export type TBlockWrapperFields = {

@@ -1,5 +1,6 @@
 'use client'
 
+import { useEffect, useState } from 'react'
 import type { TFaqs } from '@/types/contentful-models'
 import { Accordion, Text } from '@contentful/f36-components'
 
@@ -22,8 +23,16 @@ interface FaqsProps {
 export function Faqs({ data }: FaqsProps) {
   const { items } = data.fields as Record<string, unknown>
   const itemsArray = Array.isArray(items) ? items : []
+  const [isHydrated, setIsHydrated] = useState(false)
 
-  console.log('FAQ items:', itemsArray)
+  useEffect(() => {
+    setIsHydrated(true)
+  }, [])
+
+  // Renderiza um placeholder durante a hidratação para evitar mismatch
+  if (!isHydrated) {
+    return <div>{itemsArray.length > 0 ? 'Carregando...' : <p>Sem items</p>}</div>
+  }
 
   return (
     <Accordion>

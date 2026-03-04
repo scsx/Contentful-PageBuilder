@@ -101,14 +101,8 @@ export default async function DynamicPage({ params }: DynamicPageProps) {
   return (
     <div className='min-h-screen bg-white dark:bg-black'>
       <main className='flex flex-col gap-8 max-w-6xl mx-auto px-6 py-12'>
-        {/* Página encontrada */}
-        <div>
-          <h1 className='text-4xl font-bold mb-4 text-black dark:text-white'>{page.fields.name}</h1>
-          <p className='text-gray-600 dark:text-gray-400'>Slug: {page.fields.slug}</p>
-        </div>
-
         {/* Blocks */}
-        <div className='flex flex-col gap-8 border-t pt-8'>
+        <div className='flex flex-col gap-8'>
           {Array.isArray(page.fields.blocks) &&
           (page.fields.blocks as TBlockWrapper[]).length > 0 ? (
             groupBlocksByRow(page.fields.blocks as TBlockWrapper[]).map(

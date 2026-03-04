@@ -1,6 +1,7 @@
 import type { THero } from '@/types/contentful-models'
 import type { Document } from '@contentful/rich-text-types'
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
+import { CTAButton } from '@/components/Button'
 
 interface AssetFile {
   url: string
@@ -45,11 +46,14 @@ export function Hero({ data }: HeroProps) {
         {text !== undefined && text !== null && (
           <div className='text-lg mb-6'>{documentToReactComponents(text as Document)}</div>
         )}
-        {cta !== undefined && cta !== null && (
-          <button className='bg-white text-black px-8 py-3 rounded-lg font-semibold hover:bg-gray-200'>
-            CTA Button
-          </button>
-        )}
+        {cta !== undefined &&
+          cta !== null &&
+          (() => {
+            const ctaFields = (cta as Record<string, unknown>)?.fields as Record<string, unknown>
+            const ctaText = String(ctaFields?.ctaText || 'CTA Button')
+            const ctaUrl = String(ctaFields?.ctaUrl || '')
+            return <CTAButton text={ctaText} href={ctaUrl || undefined} />
+          })()}
       </div>
     </div>
   )

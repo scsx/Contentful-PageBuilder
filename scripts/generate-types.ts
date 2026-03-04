@@ -31,6 +31,7 @@ const CONTENT_TYPE_NAMES: Record<string, string> = {
   dynamicPage: 'TDynamicPage',
   blockWrapper: 'TBlockWrapper',
   faqs: 'TFaqs',
+  genericContentColumns: 'TGenericContentColumns',
   hero: 'THero'
 }
 
