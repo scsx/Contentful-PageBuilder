@@ -1,6 +1,5 @@
 'use client'
 
-import { useEffect, useState } from 'react'
 import type { TFaqs } from '@/types/contentful-models'
 import { Accordion, Text, Heading } from '@contentful/f36-components'
 
@@ -24,15 +23,6 @@ export function Faqs({ data }: FaqsProps) {
   const { items, title } = data.fields as Record<string, unknown>
   const itemsArray = Array.isArray(items) ? items : []
   const blockTitle = title ? String(title) : null
-  const [mounted, setMounted] = useState(false)
-
-  useEffect(() => {
-    setMounted(true)
-  }, [])
-
-  if (!mounted) {
-    return <div>{blockTitle && <Heading>{blockTitle}</Heading>}</div>
-  }
 
   return (
     <div>
