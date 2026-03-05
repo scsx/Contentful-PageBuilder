@@ -32,6 +32,7 @@ const CONTENT_TYPE_NAMES: Record<string, string> = {
   blockWrapper: 'TBlockWrapper',
   faqs: 'TFaqs',
   genericContentColumns: 'TGenericContentColumns',
+  largeHero: 'TLargeHero',
   hero: 'THero'
 }
 

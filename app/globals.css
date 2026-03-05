@@ -85,3 +85,10 @@ body {
 .padding-bottom-xl {
   padding-bottom: 8rem;
 }
+
+.giant-h1 {
+  font-size: 5rem;
+  line-height: 1.2;
+  font-weight: bold;
+  color: white;
+}

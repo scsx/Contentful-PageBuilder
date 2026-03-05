@@ -1,7 +1,7 @@
 /* ============================================================================
  * Auto-generated from Contentful Content Models using scripts/generate-types.ts
  * 
- * Generated at: 2026-03-04T20:59:39.482Z
+ * Generated at: 2026-03-05T01:51:50.223Z
  * Space ID: zh8lljn49bf0
  * Environment: master
  * 
@@ -37,6 +37,43 @@ export type EntryLink<T> = {
 // ============================================================================
 // GENERATED TYPES
 // ============================================================================
+
+
+export type TLargeHeroFields = {
+  name: string;
+  content?: EntryLink<unknown>;
+};
+
+
+export type TLargeHeroEntrySkeleton = EntrySkeletonType<
+  TLargeHeroFields,
+  'largeHero'
+>;
+
+
+export type TLargeHeroEntry<L extends string = 'pt-PT'> =
+  Entry<TLargeHeroEntrySkeleton, undefined, L>;
+
+export type TLargeHero = TLargeHeroEntry<'pt-PT'>;
+
+
+export type TDynamicPageFields = {
+  name: string;
+  slug: string;
+  blocks?: TBlockWrapper[];
+};
+
+
+export type TDynamicPageEntrySkeleton = EntrySkeletonType<
+  TDynamicPageFields,
+  'dynamicPage'
+>;
+
+
+export type TDynamicPageEntry<L extends string = 'pt-PT'> =
+  Entry<TDynamicPageEntrySkeleton, undefined, L>;
+
+export type TDynamicPage = TDynamicPageEntry<'pt-PT'>;
 
 
 export type TGenericContentColumnsFields = {
@@ -82,25 +119,6 @@ export type TBlockWrapperEntry<L extends string = 'pt-PT'> =
   Entry<TBlockWrapperEntrySkeleton, undefined, L>;
 
 export type TBlockWrapper = TBlockWrapperEntry<'pt-PT'>;
-
-
-export type TDynamicPageFields = {
-  name: string;
-  slug: string;
-  blocks?: TBlockWrapper[];
-};
-
-
-export type TDynamicPageEntrySkeleton = EntrySkeletonType<
-  TDynamicPageFields,
-  'dynamicPage'
->;
-
-
-export type TDynamicPageEntry<L extends string = 'pt-PT'> =
-  Entry<TDynamicPageEntrySkeleton, undefined, L>;
-
-export type TDynamicPage = TDynamicPageEntry<'pt-PT'>;
 
 
 export type TFaqsFields = {

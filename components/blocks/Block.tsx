@@ -1,14 +1,25 @@
-import type { TBlockWrapper, THero, TFaqs, TGenericContentColumns } from '@/types/contentful-models'
+import type {
+  TBlockWrapper,
+  THero,
+  TFaqs,
+  TGenericContentColumns,
+  TLargeHero
+} from '@/types/contentful-models'
 import { Hero } from './Hero'
 import { Faqs } from './Faqs'
 import { GenericColumns } from './GenericColumns'
+import { LargeHero } from './LargeHero'
 
 interface BlockProps {
   readonly block: TBlockWrapper
 }
 
 export function Block({ block }: BlockProps) {
-  const content = block.fields.content as unknown as THero | TFaqs | TGenericContentColumns
+  const content = block.fields.content as unknown as
+    | THero
+    | TFaqs
+    | TGenericContentColumns
+    | TLargeHero
   const centerVertically = (block.fields as Record<string, unknown>).centerVertically as
     | boolean
     | undefined
@@ -25,6 +36,7 @@ export function Block({ block }: BlockProps) {
   const isHero = contentTypeId === 'hero'
   const isFaqs = contentTypeId === 'faqs'
   const isGenericColumns = contentTypeId === 'genericContentColumns'
+  const isLargeHero = contentTypeId === 'largeHero'
 
   let blockType = 'Unknown'
   let badgeColor = 'bg-gray-500'
@@ -38,6 +50,9 @@ export function Block({ block }: BlockProps) {
   } else if (isGenericColumns) {
     blockType = 'Columns'
     badgeColor = 'bg-amber-500'
+  } else if (isLargeHero) {
+    blockType = 'Large Hero'
+    badgeColor = 'bg-indigo-500'
   }
 
   const centerClasses = centerVertically ? 'flex items-center justify-center' : ''
@@ -51,6 +66,7 @@ export function Block({ block }: BlockProps) {
       {isHero && <Hero data={content as THero} />}
       {isFaqs && <Faqs data={content as TFaqs} />}
       {isGenericColumns && <GenericColumns data={content as TGenericContentColumns} />}
+      {isLargeHero && <LargeHero data={content as TLargeHero} />}
     </div>
   )
 }
