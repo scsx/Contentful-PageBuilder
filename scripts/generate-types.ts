@@ -268,7 +268,7 @@ async function generateTypes(): Promise<void> {
     }
 
     // 3. Iniciar chunks com cabeçalho
-    const header = generateHeader(SPACE_ID, ENV)
+    const header = generateHeader(SPACE_ID!, ENV)
     const chunks: string[] = [header]
 
     // 4. Gerar tipos para cada content type
