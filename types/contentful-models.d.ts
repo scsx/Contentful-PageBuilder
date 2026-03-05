@@ -1,7 +1,7 @@
 /* ============================================================================
  * Auto-generated from Contentful Content Models using scripts/generate-types.ts
  * 
- * Generated at: 2026-03-05T01:51:50.223Z
+ * Generated at: 2026-03-05T10:19:57.903Z
  * Space ID: zh8lljn49bf0
  * Environment: master
  * 
@@ -31,12 +31,41 @@ export type EntryLink<T> = {
 // CUSTOM TYPES (adicione manualmente aqui tipos customizados)
 // ============================================================================
 
-// Exemplo:
-// export type TSectionType = 'hero' | 'features' | 'cta';
+/**
+ * Tipos customizados que não são auto-gerados pelo Contentful
+ * Úteis para estruturas complexas ou campos JSON
+ */
+
+// TIMELINE
+export type TTimelineItem = {
+  title: string
+  text: string
+}
 
 // ============================================================================
 // GENERATED TYPES
 // ============================================================================
+
+
+export type TTimelineFields = {
+  name: string;
+  timeline?: string;
+  items?: Record<string, unknown>;
+  direction?: boolean;
+  color?: boolean;
+};
+
+
+export type TTimelineEntrySkeleton = EntrySkeletonType<
+  TTimelineFields,
+  'timeline'
+>;
+
+
+export type TTimelineEntry<L extends string = 'pt-PT'> =
+  Entry<TTimelineEntrySkeleton, undefined, L>;
+
+export type TTimeline = TTimelineEntry<'pt-PT'>;
 
 
 export type TLargeHeroFields = {

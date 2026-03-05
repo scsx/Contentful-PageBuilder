@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import 'dotenv/config.js'
-import { writeFileSync } from 'node:fs'
+import { writeFileSync, readFileSync } from 'node:fs'
 
 /**
  * Script para gerar tipos TypeScript a partir dos modelos de conteúdo do Contentful
@@ -33,7 +33,8 @@ const CONTENT_TYPE_NAMES: Record<string, string> = {
   faqs: 'TFaqs',
   genericContentColumns: 'TGenericContentColumns',
   largeHero: 'TLargeHero',
-  hero: 'THero'
+  hero: 'THero',
+  timeline: 'TTimeline'
 }
 
 const CONTENT_TYPE_IDS = Object.keys(CONTENT_TYPE_NAMES)
@@ -154,6 +155,27 @@ const getInterfaceName = (ct: any): string => {
 // ============================================================================
 
 function generateHeader(spaceId: string, env: string): string {
+  // Tentar ler custom-types.ts
+  let customTypesContent = "// Exemplo:\n// export type TSectionType = 'hero' | 'features' | 'cta';"
+  try {
+    customTypesContent = readFileSync('types/custom-types.ts', 'utf-8')
+      .split('\n')
+      .map((line) => {
+        // Adiciona 'export' se a linha define um tipo e não tem 'export'
+        if (
+          (line.trim().startsWith('type ') || line.trim().startsWith('interface ')) &&
+          !line.includes('export')
+        ) {
+          return line.replace(/^(\s*)(type|interface)/, '$1export $2')
+        }
+        return line
+      })
+      .join('\n')
+      .trim()
+  } catch {
+    // custom-types.ts não existe, usar exemplo padrão
+  }
+
   return `/* ============================================================================
  * Auto-generated from Contentful Content Models using scripts/generate-types.ts
  * 
@@ -187,8 +209,7 @@ export type EntryLink<T> = {
 // CUSTOM TYPES (adicione manualmente aqui tipos customizados)
 // ============================================================================
 
-// Exemplo:
-// export type TSectionType = 'hero' | 'features' | 'cta';
+${customTypesContent}
 
 // ============================================================================
 // GENERATED TYPES

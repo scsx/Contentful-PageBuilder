@@ -3,12 +3,14 @@ import type {
   THero,
   TFaqs,
   TGenericContentColumns,
-  TLargeHero
+  TLargeHero,
+  TTimeline
 } from '@/types/contentful-models'
 import { Hero } from './Hero'
 import { Faqs } from './Faqs'
 import { GenericColumns } from './GenericColumns'
 import { LargeHero } from './LargeHero'
+import { Timeline } from './Timeline'
 
 interface BlockProps {
   readonly block: TBlockWrapper
@@ -20,6 +22,7 @@ export function Block({ block }: BlockProps) {
     | TFaqs
     | TGenericContentColumns
     | TLargeHero
+    | TTimeline
   const centerVertically = (block.fields as Record<string, unknown>).centerVertically as
     | boolean
     | undefined
@@ -37,6 +40,7 @@ export function Block({ block }: BlockProps) {
   const isFaqs = contentTypeId === 'faqs'
   const isGenericColumns = contentTypeId === 'genericContentColumns'
   const isLargeHero = contentTypeId === 'largeHero'
+  const isTimeline = contentTypeId === 'timeline'
 
   let blockType = 'Unknown'
   let badgeColor = 'bg-gray-500'
@@ -53,6 +57,9 @@ export function Block({ block }: BlockProps) {
   } else if (isLargeHero) {
     blockType = 'Large Hero'
     badgeColor = 'bg-indigo-500'
+  } else if (isTimeline) {
+    blockType = 'Timeline'
+    badgeColor = 'bg-cyan-500'
   }
 
   const centerClasses = centerVertically ? 'flex items-center justify-center' : ''
@@ -67,6 +74,7 @@ export function Block({ block }: BlockProps) {
       {isFaqs && <Faqs data={content as TFaqs} />}
       {isGenericColumns && <GenericColumns data={content as TGenericContentColumns} />}
       {isLargeHero && <LargeHero data={content as TLargeHero} />}
+      {isTimeline && <Timeline data={content as TTimeline} />}
     </div>
   )
 }
