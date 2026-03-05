@@ -38,8 +38,8 @@ interface ColumnItem {
   [key: string]: unknown
 }
 
-interface GenericColumnsProps {
-  readonly data: TGenericContentColumns
+type GenericColumnsProps = {
+  data: TGenericContentColumns
 }
 
 function getGridColsClass(itemCount: number): string {
@@ -60,6 +60,7 @@ export function GenericColumns({ data }: GenericColumnsProps) {
   const title = String(fields?.title || '')
   const subtitle = String(fields?.subtitle || '')
   const isCarousel = (fields?.isCarousel as boolean) ?? false
+  const isNumbered = (fields?.isNumbered as boolean) ?? false
   const items = Array.isArray(fields?.items) ? (fields.items as ColumnItem[]) : []
 
   const handlePrevious = () => {
@@ -84,10 +85,13 @@ export function GenericColumns({ data }: GenericColumnsProps) {
     const imageUrl =
       itemImage && 'fields' in itemImage ? (itemImage as Asset).fields?.file?.url : undefined
 
+    const itemNumber = String(index + 1).padStart(2, '0')
+
     return (
       <Box
         key={`${item.sys.id}-${index}`}
-        className='overflow-hidden bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 shadow-sm w-full'>
+        className='relative overflow-hidden bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 shadow-sm w-full'>
+        {isNumbered && <div className='text-4xl mt-4 ml-5 -mb-4 text-blue-500'>{itemNumber}</div>}
         {imageUrl && (
           <div className='h-48 overflow-hidden bg-gray-200 dark:bg-gray-700'>
             <img src={imageUrl} alt={itemTitle} className='w-full h-full object-cover' />
@@ -122,9 +126,9 @@ export function GenericColumns({ data }: GenericColumnsProps) {
   return (
     <div className='w-full h-full flex flex-col'>
       {/* Header */}
-      <div className='text-center my-8 flex-shrink-0'>
+      <div className='text-center my-8 flex-shrink-0 max-w-[66%] mx-auto'>
         {title && (
-          <Heading as='h2' fontSize='fontSize4Xl' className='mb-4'>
+          <Heading as='h2' fontSize='fontSize4Xl' lineHeight='lineHeight3Xl' className='mb-4'>
             {title}
           </Heading>
         )}

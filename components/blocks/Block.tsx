@@ -4,16 +4,20 @@ import type {
   TFaqs,
   TGenericContentColumns,
   TLargeHero,
-  TTimeline
+  TTimeline,
+  TBreadcrumbs,
+  TCtaGroup
 } from '@/types/contentful-models'
 import { Hero } from './Hero'
 import { Faqs } from './Faqs'
 import { GenericColumns } from './GenericColumns'
 import { LargeHero } from './LargeHero'
 import { Timeline } from './Timeline'
+import { Breadcrumbs } from './Breadcrumbs'
+import { CtaGroup } from './CtaGroup'
 
-interface BlockProps {
-  readonly block: TBlockWrapper
+type BlockProps = {
+  block: TBlockWrapper
 }
 
 export function Block({ block }: BlockProps) {
@@ -23,6 +27,8 @@ export function Block({ block }: BlockProps) {
     | TGenericContentColumns
     | TLargeHero
     | TTimeline
+    | TBreadcrumbs
+    | TCtaGroup
   const centerVertically = (block.fields as Record<string, unknown>).centerVertically as
     | boolean
     | undefined
@@ -41,6 +47,8 @@ export function Block({ block }: BlockProps) {
   const isGenericColumns = contentTypeId === 'genericContentColumns'
   const isLargeHero = contentTypeId === 'largeHero'
   const isTimeline = contentTypeId === 'timeline'
+  const isBreadcrumbs = contentTypeId === 'breadcrumbs'
+  const isCtaGroup = contentTypeId === 'ctaGroup'
 
   let blockType = 'Unknown'
   let badgeColor = 'bg-gray-500'
@@ -60,6 +68,12 @@ export function Block({ block }: BlockProps) {
   } else if (isTimeline) {
     blockType = 'Timeline'
     badgeColor = 'bg-cyan-500'
+  } else if (isBreadcrumbs) {
+    blockType = 'Breadcrumbs'
+    badgeColor = 'bg-green-500'
+  } else if (isCtaGroup) {
+    blockType = 'CTA Group'
+    badgeColor = 'bg-red-500'
   }
 
   const centerClasses = centerVertically ? 'flex items-center justify-center' : ''
@@ -75,6 +89,8 @@ export function Block({ block }: BlockProps) {
       {isGenericColumns && <GenericColumns data={content as TGenericContentColumns} />}
       {isLargeHero && <LargeHero data={content as TLargeHero} />}
       {isTimeline && <Timeline data={content as TTimeline} />}
+      {isBreadcrumbs && <Breadcrumbs />}
+      {isCtaGroup && <CtaGroup data={content as TCtaGroup} />}
     </div>
   )
 }

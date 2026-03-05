@@ -1,14 +1,14 @@
 import type { TTimeline } from '@/types/contentful-models'
 
-interface TimelineProps {
-  readonly data: TTimeline
+type TimelineProps = {
+  data: TTimeline
 }
 
 export function Timeline({ data }: TimelineProps) {
   const fields = data.fields as Record<string, unknown>
-  const { title, items, color, direction } = fields
+  const { timeline, items, color, direction } = fields
 
-  const timelineTitle = typeof title === 'string' ? title : ''
+  const timelineTitle = typeof timeline === 'string' ? timeline : ''
   const isDarkColor = color === true
   const isVertical = direction !== false // default true
 
@@ -28,18 +28,17 @@ export function Timeline({ data }: TimelineProps) {
   }
 
   // Definir cores baseado em isDarkColor
-  const lineColor = isDarkColor ? 'bg-blue-900' : 'bg-blue-300'
-  const dotColor = isDarkColor ? 'bg-blue-900' : 'bg-blue-300'
-  const titleColor = isDarkColor
-    ? 'text-blue-900 dark:text-blue-300'
-    : 'text-blue-300 dark:text-blue-200'
+  const lineColor = isDarkColor ? 'bg-blue-900' : 'bg-white'
+  const dotColor = isDarkColor ? 'bg-blue-900' : 'bg-white'
+  const titleColor = isDarkColor ? 'text-blue-900' : 'text-white'
+  const itemTextColor = isDarkColor ? 'text-gray-800' : 'text-gray-100'
 
   // TIMELINE VERTICAL
   if (isVertical) {
     return (
       <div className='w-full py-8'>
         {timelineTitle && (
-          <h2 className='text-2xl font-bold mb-8 text-gray-900 dark:text-white'>{timelineTitle}</h2>
+          <h2 className={`text-2xl font-bold mb-8 ${titleColor}`}>{timelineTitle}</h2>
         )}
 
         <div className='relative'>
@@ -63,7 +62,7 @@ export function Timeline({ data }: TimelineProps) {
                   {/* Conteúdo */}
                   <div>
                     <h2 className={`font-semibold -mt-2 ${titleColor}`}>{itemTitle}</h2>
-                    <p className='text-sm text-gray-800 dark:text-gray-400 mt-1'>{itemText}</p>
+                    <p className={`text-sm ${itemTextColor} mt-1`}>{itemText}</p>
                   </div>
                 </div>
               )
@@ -78,9 +77,7 @@ export function Timeline({ data }: TimelineProps) {
   return (
     <div className='w-full py-8 px-0'>
       {timelineTitle && (
-        <h2 className='text-2xl font-bold mb-8 text-gray-900 dark:text-white px-6'>
-          {timelineTitle}
-        </h2>
+        <h2 className={`text-2xl font-bold mb-8 ${titleColor}`}>{timelineTitle}</h2>
       )}
 
       <div className='relative pt-16'>
@@ -101,8 +98,8 @@ export function Timeline({ data }: TimelineProps) {
 
                 {/* Conteúdo */}
                 <div>
-                  <h2 className={`font-semibold ${titleColor}`}>{itemTitle}</h2>
-                  <p className='text-sm text-gray-800 dark:text-gray-400 mt-1'>{itemText}</p>
+                  <h3 className={`font-semibold ${titleColor}`}>{itemTitle}</h3>
+                  <p className={`text-sm ${itemTextColor} mt-1`}>{itemText}</p>
                 </div>
               </div>
             )

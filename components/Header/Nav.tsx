@@ -2,13 +2,13 @@
 
 import Link from 'next/link'
 
-interface NavLink {
-  readonly label: string
-  readonly href: string
+type NavLink = {
+  label: string
+  href: string
 }
 
-interface NavProps {
-  readonly links: NavLink[]
+type NavProps = {
+  links: NavLink[]
 }
 
 export function Nav({ links }: NavProps) {

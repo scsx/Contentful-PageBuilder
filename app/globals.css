@@ -36,6 +36,37 @@ body {
   background-color: #c1c2c4;
 }
 
+/* Button color classes */
+.btn-primary {
+  background-color: #2d6a4a;
+  color: white;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
+}
+
+.btn-secondary {
+  background-color: #8b8570;
+  color: white;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
+}
+
+.btn-alternative {
+  background-color: #991f1f;
+  color: white;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
+}
+
+.btn-neutral {
+  background-color: #7a7a7c;
+  color: white;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
+}
+
+.btn-white {
+  background-color: #ffffff;
+  color: #000000;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
+}
+
 /* Padding top classes */
 .padding-top-none {
   padding-top: 0;

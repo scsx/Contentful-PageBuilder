@@ -34,7 +34,10 @@ const CONTENT_TYPE_NAMES: Record<string, string> = {
   genericContentColumns: 'TGenericContentColumns',
   largeHero: 'TLargeHero',
   hero: 'THero',
-  timeline: 'TTimeline'
+  timeline: 'TTimeline',
+  cta: 'TCta',
+  breadcrumbs: 'TBreadcrumbs',
+  ctaGroup: 'TCtaGroup'
 }
 
 const CONTENT_TYPE_IDS = Object.keys(CONTENT_TYPE_NAMES)

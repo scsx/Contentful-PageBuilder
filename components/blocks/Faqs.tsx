@@ -15,8 +15,8 @@ interface FaqItem {
   [key: string]: unknown
 }
 
-interface FaqsProps {
-  readonly data: TFaqs
+type FaqsProps = {
+  data: TFaqs
 }
 
 export function Faqs({ data }: FaqsProps) {

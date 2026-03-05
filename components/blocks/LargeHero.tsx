@@ -3,8 +3,8 @@
 import type { TLargeHero } from '@/types/contentful-models'
 import { Heading } from '@contentful/f36-typography'
 
-interface LargeHeroProps {
-  readonly data: TLargeHero
+type LargeHeroProps = {
+  data: TLargeHero
 }
 
 export function LargeHero({ data }: LargeHeroProps) {

@@ -1,7 +1,7 @@
 import type { THero } from '@/types/contentful-models'
 import type { Document } from '@contentful/rich-text-types'
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
-import { CTAButton } from '@/components/Button'
+import { CTA } from '@/components/Button'
 
 interface AssetFile {
   url: string
@@ -21,8 +21,8 @@ interface Asset {
   [key: string]: unknown
 }
 
-interface HeroProps {
-  readonly data: THero
+type HeroProps = {
+  data: THero
 }
 
 export function Hero({ data }: HeroProps) {
@@ -44,15 +44,14 @@ export function Hero({ data }: HeroProps) {
       <div className='relative z-10 text-center text-white px-6'>
         <h2 className='text-4xl font-bold mb-4'>{String(title)}</h2>
         {text !== undefined && text !== null && (
-          <div className='text-lg mb-6 md:max-w-[66.66%] mx-auto'>{documentToReactComponents(text as Document)}</div>
+          <div className='text-lg mb-6 md:max-w-[66.66%] mx-auto'>
+            {documentToReactComponents(text as Document)}
+          </div>
         )}
         {cta !== undefined &&
           cta !== null &&
           (() => {
-            const ctaFields = (cta as Record<string, unknown>)?.fields as Record<string, unknown>
-            const ctaText = String(ctaFields?.ctaText || 'CTA Button')
-            const ctaUrl = String(ctaFields?.ctaUrl || '')
-            return <CTAButton text={ctaText} href={ctaUrl || undefined} />
+            return <CTA cta={cta as any} />
           })()}
       </div>
     </div>

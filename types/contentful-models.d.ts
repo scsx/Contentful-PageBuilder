@@ -1,7 +1,7 @@
 /* ============================================================================
  * Auto-generated from Contentful Content Models using scripts/generate-types.ts
  * 
- * Generated at: 2026-03-05T10:19:57.903Z
+ * Generated at: 2026-03-05T20:54:12.342Z
  * Space ID: zh8lljn49bf0
  * Environment: master
  * 
@@ -45,6 +45,110 @@ export type TTimelineItem = {
 // ============================================================================
 // GENERATED TYPES
 // ============================================================================
+
+
+export type TCtaGroupFields = {
+  name: string;
+  titleAndSubtitle?: EntryLink<unknown>;
+  items: TCta[];
+  direction?: boolean;
+  alignment?: "left" | "center" | "right" | "full";
+};
+
+
+export type TCtaGroupEntrySkeleton = EntrySkeletonType<
+  TCtaGroupFields,
+  'ctaGroup'
+>;
+
+
+export type TCtaGroupEntry<L extends string = 'pt-PT'> =
+  Entry<TCtaGroupEntrySkeleton, undefined, L>;
+
+export type TCtaGroup = TCtaGroupEntry<'pt-PT'>;
+
+
+export type TBlockWrapperFields = {
+  name: string;
+  content: EntryLink<unknown>;
+  width?: "1/3" | "1/2" | "2/3" | "Full";
+  backgroundColour?: "none" | "white" | "primary" | "secondary" | "alternative" | "neutral";
+  backgroundImage?: AssetLink;
+  paddingTop?: "none" | "xs" | "s" | "m" | "l" | "xl";
+  paddingBottom?: "none" | "xs" | "s" | "m" | "l" | "xl";
+  centerVertically?: boolean;
+};
+
+
+export type TBlockWrapperEntrySkeleton = EntrySkeletonType<
+  TBlockWrapperFields,
+  'blockWrapper'
+>;
+
+
+export type TBlockWrapperEntry<L extends string = 'pt-PT'> =
+  Entry<TBlockWrapperEntrySkeleton, undefined, L>;
+
+export type TBlockWrapper = TBlockWrapperEntry<'pt-PT'>;
+
+
+export type TGenericContentColumnsFields = {
+  name: string;
+  title?: string;
+  subtitle?: string;
+  items: EntryLink<unknown>[];
+  isCarousel?: boolean;
+  isNumbered?: boolean;
+};
+
+
+export type TGenericContentColumnsEntrySkeleton = EntrySkeletonType<
+  TGenericContentColumnsFields,
+  'genericContentColumns'
+>;
+
+
+export type TGenericContentColumnsEntry<L extends string = 'pt-PT'> =
+  Entry<TGenericContentColumnsEntrySkeleton, undefined, L>;
+
+export type TGenericContentColumns = TGenericContentColumnsEntry<'pt-PT'>;
+
+
+export type TBreadcrumbsFields = {
+  name?: string;
+  style?: "default" | "large";
+};
+
+
+export type TBreadcrumbsEntrySkeleton = EntrySkeletonType<
+  TBreadcrumbsFields,
+  'breadcrumbs'
+>;
+
+
+export type TBreadcrumbsEntry<L extends string = 'pt-PT'> =
+  Entry<TBreadcrumbsEntrySkeleton, undefined, L>;
+
+export type TBreadcrumbs = TBreadcrumbsEntry<'pt-PT'>;
+
+
+export type TCtaFields = {
+  ctaText: string;
+  ctaUrl: string;
+  ctaBgColour?: "primary" | "secondary" | "alternative" | "neutral" | "white";
+};
+
+
+export type TCtaEntrySkeleton = EntrySkeletonType<
+  TCtaFields,
+  'cta'
+>;
+
+
+export type TCtaEntry<L extends string = 'pt-PT'> =
+  Entry<TCtaEntrySkeleton, undefined, L>;
+
+export type TCta = TCtaEntry<'pt-PT'>;
 
 
 export type TTimelineFields = {
@@ -105,51 +209,6 @@ export type TDynamicPageEntry<L extends string = 'pt-PT'> =
 export type TDynamicPage = TDynamicPageEntry<'pt-PT'>;
 
 
-export type TGenericContentColumnsFields = {
-  name: string;
-  title?: string;
-  subtitle?: string;
-  items: EntryLink<unknown>[];
-  isCarousel?: boolean;
-};
-
-
-export type TGenericContentColumnsEntrySkeleton = EntrySkeletonType<
-  TGenericContentColumnsFields,
-  'genericContentColumns'
->;
-
-
-export type TGenericContentColumnsEntry<L extends string = 'pt-PT'> =
-  Entry<TGenericContentColumnsEntrySkeleton, undefined, L>;
-
-export type TGenericContentColumns = TGenericContentColumnsEntry<'pt-PT'>;
-
-
-export type TBlockWrapperFields = {
-  name: string;
-  content: EntryLink<unknown>;
-  width?: "1/3" | "1/2" | "2/3" | "Full";
-  backgroundColour?: "none" | "white" | "primary" | "secondary" | "alternative" | "neutral";
-  backgroundImage?: AssetLink;
-  paddingTop?: "none" | "xs" | "s" | "m" | "l" | "xl";
-  paddingBottom?: "none" | "xs" | "s" | "m" | "l" | "xl";
-  centerVertically?: boolean;
-};
-
-
-export type TBlockWrapperEntrySkeleton = EntrySkeletonType<
-  TBlockWrapperFields,
-  'blockWrapper'
->;
-
-
-export type TBlockWrapperEntry<L extends string = 'pt-PT'> =
-  Entry<TBlockWrapperEntrySkeleton, undefined, L>;
-
-export type TBlockWrapper = TBlockWrapperEntry<'pt-PT'>;
-
-
 export type TFaqsFields = {
   name: string;
   title?: string;
@@ -174,7 +233,7 @@ export type THeroFields = {
   title: string;
   text?: Document;
   backgroundImage: AssetLink;
-  cta?: EntryLink<unknown>;
+  cta?: TCtaEntry<L>;
 };
 
 
