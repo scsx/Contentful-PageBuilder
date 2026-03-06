@@ -99,7 +99,7 @@ export function GenericColumns({ data }: GenericColumnsProps) {
         className='relative overflow-hidden bg-white rounded-lg border border-gray-200 shadow-sm w-full'>
         {isNumbered && <div className='text-4xl mt-4 ml-5 -mb-4 text-blue-500'>{itemNumber}</div>}
         {imageUrl && (
-          <div className='h-48 overflow-hidden bg-gray-200 dark:bg-gray-700 relative'>
+          <div className='h-48 overflow-hidden bg-gray-200 relative'>
             <Image
               src={String(imageUrl)}
               alt={itemTitle}

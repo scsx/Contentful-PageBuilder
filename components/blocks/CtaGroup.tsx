@@ -48,7 +48,7 @@ export function CtaGroup({ data }: CtaGroupProps) {
       {(title || subtitle) && (
         <div className='text-center mb-8'>
           {title && <h2 className='text-2xl font-bold mb-2'>{title}</h2>}
-          {subtitle && <p className='text-gray-600 dark:text-gray-400'>{subtitle}</p>}
+          {subtitle && <p className='text-gray-600'>{subtitle}</p>}
         </div>
       )}
 

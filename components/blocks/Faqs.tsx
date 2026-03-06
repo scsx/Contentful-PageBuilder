@@ -27,9 +27,7 @@ export function Faqs({ data }: FaqsProps) {
 
   return (
     <div>
-      {blockTitle && (
-        <h2 className='text-2xl font-bold mb-6 text-gray-900 dark:text-white'>{blockTitle}</h2>
-      )}
+      {blockTitle && <h2 className='text-2xl font-bold mb-6 text-gray-900'>{blockTitle}</h2>}
       <div className='space-y-2'>
         {itemsArray && itemsArray.length > 0 ? (
           itemsArray.map((item: FaqItem) => {
@@ -39,15 +37,13 @@ export function Faqs({ data }: FaqsProps) {
             const isOpen = openId === item.sys.id
 
             return (
-              <div
-                key={item.sys.id}
-                className='border border-gray-200 dark:border-gray-700 rounded-lg'>
+              <div key={item.sys.id} className='border border-gray-200 rounded-lg'>
                 <button
                   onClick={() => setOpenId(isOpen ? null : item.sys.id)}
-                  className='w-full px-4 py-3 flex items-center justify-between text-left hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors'>
-                  <h3 className='font-semibold text-gray-900 dark:text-white'>{itemTitle}</h3>
+                  className='w-full px-4 py-3 flex items-center justify-between text-left hover:bg-gray-50 transition-colors'>
+                  <h3 className='font-semibold text-gray-900'>{itemTitle}</h3>
                   <svg
-                    className={`w-5 h-5 text-gray-600 dark:text-gray-300 transition-transform ${
+                    className={`w-5 h-5 text-gray-600 transition-transform ${
                       isOpen ? 'rotate-180' : ''
                     }`}
                     fill='none'
@@ -62,15 +58,15 @@ export function Faqs({ data }: FaqsProps) {
                   </svg>
                 </button>
                 {isOpen && (
-                  <div className='px-4 py-3 bg-gray-50 dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700'>
-                    <p className='text-gray-700 dark:text-gray-300'>{text}</p>
+                  <div className='px-4 py-3 bg-gray-50 border-t border-gray-200'>
+                    <p className='text-gray-700'>{text}</p>
                   </div>
                 )}
               </div>
             )
           })
         ) : (
-          <p className='text-gray-500 dark:text-gray-400'>Sem items</p>
+          <p className='text-gray-500'>Sem items</p>
         )}
       </div>
     </div>

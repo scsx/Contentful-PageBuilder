@@ -32,7 +32,7 @@ export default async function DynamicPage({ params }: DynamicPageProps) {
   }
 
   return (
-    <div className='min-h-screen bg-white dark:bg-black'>
+    <div className='min-h-screen bg-white'>
       <main className='flex flex-col'>
         {/* Blocks */}
         <div className='flex flex-col'>
@@ -101,7 +101,7 @@ export default async function DynamicPage({ params }: DynamicPageProps) {
               )
             })
           ) : (
-            <p className='text-gray-500 dark:text-gray-400'>Sem blocks</p>
+            <p className='text-gray-500'>Sem blocks</p>
           )}
         </div>
       </main>
