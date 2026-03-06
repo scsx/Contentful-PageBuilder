@@ -1,7 +1,7 @@
 /* ============================================================================
  * Auto-generated from Contentful Content Models using scripts/generate-types.ts
  * 
- * Generated at: 2026-03-05T20:54:12.342Z
+ * Generated at: 2026-03-06T00:00:41.199Z
  * Space ID: zh8lljn49bf0
  * Environment: master
  * 
@@ -47,6 +47,29 @@ export type TTimelineItem = {
 // ============================================================================
 
 
+export type TGenericContentColumnsFields = {
+  name: string;
+  title?: string;
+  subtitle?: string;
+  items: EntryLink<unknown>[];
+  isCarousel?: boolean;
+  isNumbered?: boolean;
+  imagesHeight?: "short" | "normal" | "tall";
+};
+
+
+export type TGenericContentColumnsEntrySkeleton = EntrySkeletonType<
+  TGenericContentColumnsFields,
+  'genericContentColumns'
+>;
+
+
+export type TGenericContentColumnsEntry<L extends string = 'pt-PT'> =
+  Entry<TGenericContentColumnsEntrySkeleton, undefined, L>;
+
+export type TGenericContentColumns = TGenericContentColumnsEntry<'pt-PT'>;
+
+
 export type TCtaGroupFields = {
   name: string;
   titleAndSubtitle?: EntryLink<unknown>;
@@ -90,28 +113,6 @@ export type TBlockWrapperEntry<L extends string = 'pt-PT'> =
   Entry<TBlockWrapperEntrySkeleton, undefined, L>;
 
 export type TBlockWrapper = TBlockWrapperEntry<'pt-PT'>;
-
-
-export type TGenericContentColumnsFields = {
-  name: string;
-  title?: string;
-  subtitle?: string;
-  items: EntryLink<unknown>[];
-  isCarousel?: boolean;
-  isNumbered?: boolean;
-};
-
-
-export type TGenericContentColumnsEntrySkeleton = EntrySkeletonType<
-  TGenericContentColumnsFields,
-  'genericContentColumns'
->;
-
-
-export type TGenericContentColumnsEntry<L extends string = 'pt-PT'> =
-  Entry<TGenericContentColumnsEntrySkeleton, undefined, L>;
-
-export type TGenericContentColumns = TGenericContentColumnsEntry<'pt-PT'>;
 
 
 export type TBreadcrumbsFields = {

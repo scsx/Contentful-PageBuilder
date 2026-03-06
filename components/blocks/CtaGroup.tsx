@@ -10,7 +10,7 @@ type CtaGroupProps = {
 export function CtaGroup({ data }: CtaGroupProps) {
   const fields = data.fields as Record<string, unknown>
   const items = (fields?.items as TCta[]) ?? []
-  const direction = (fields?.direction as boolean) ?? false 
+  const direction = (fields?.direction as boolean) ?? false
   const alignment = (fields?.alignment as string) ?? 'center'
   const titleAndSubtitle = fields?.titleAndSubtitle as Record<string, unknown> | undefined
 
@@ -24,28 +24,22 @@ export function CtaGroup({ data }: CtaGroupProps) {
   const isFull = alignment === 'full'
 
   // Classes de alinhamento baseadas na direção
-  let positionClass = ''
-  if (isVertical) {
-    // Vertical: usar items-* para alinhar no eixo horizontal
-    positionClass = !isFull
-      ? {
-          left: 'items-start',
-          center: 'items-center',
-          right: 'items-end'
-        }[alignment] || 'items-center'
-      : ''
-  } else {
-    // Horizontal: usar justify-* para alinhar no eixo horizontal
-    positionClass = !isFull
-      ? {
-          left: 'justify-start',
-          center: 'justify-center',
-          right: 'justify-end'
-        }[alignment] || 'justify-center'
-      : ''
-  }
+  const positionClassVertical = !isFull
+    ? {
+        left: 'items-start',
+        center: 'items-center',
+        right: 'items-end'
+      }[alignment] || 'items-center'
+    : ''
 
-  const flexDirection = isVertical ? 'flex-col' : 'flex-row'
+  const positionClassHorizontal = !isFull
+    ? {
+        left: 'justify-start',
+        center: 'justify-center',
+        right: 'justify-end'
+      }[alignment] || 'justify-center'
+    : ''
+
   const itemWidth = isFull ? 'w-full' : 'w-auto'
 
   return (
@@ -60,7 +54,7 @@ export function CtaGroup({ data }: CtaGroupProps) {
 
       {/* HORIZONTAL LAYOUT */}
       {!isVertical && (
-        <div className={`flex flex-row gap-4 ${positionClass}`}>
+        <div className={`flex flex-row gap-4 ${positionClassHorizontal}`}>
           {items.map((cta) => (
             <CTA cta={cta} key={cta.sys.id} className={itemWidth} />
           ))}
@@ -69,9 +63,9 @@ export function CtaGroup({ data }: CtaGroupProps) {
 
       {/* VERTICAL LAYOUT */}
       {isVertical && (
-        <div className={`flex flex-col gap-3 ${positionClass} w-full`}>
+        <div className={`flex flex-col gap-3 ${positionClassVertical} w-full`}>
           {items.map((cta) => (
-            <CTA cta={cta} key={cta.sys.id} className='w-full' />
+            <CTA cta={cta} key={cta.sys.id} className={itemWidth} />
           ))}
         </div>
       )}

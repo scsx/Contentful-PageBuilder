@@ -10,7 +10,7 @@ import type {
 } from '@/types/contentful-models'
 import { Hero } from './Hero'
 import { Faqs } from './Faqs'
-import { GenericColumns } from './GenericColumns'
+import { GenericColumns } from './GenericColumns/GenericColumns'
 import { LargeHero } from './LargeHero'
 import { Timeline } from './Timeline'
 import { Breadcrumbs } from './Breadcrumbs'

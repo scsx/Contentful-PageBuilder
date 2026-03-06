@@ -4,20 +4,22 @@ import { useState } from 'react'
 import type { TGenericContentColumns } from '@/types/contentful-models'
 import type { Document } from '@contentful/rich-text-types'
 import { Heading, Paragraph, Box } from '@contentful/f36-components'
+import { MobileCarousel } from './MobileCarousel'
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
+import Image from 'next/image'
 
-interface AssetFile {
+type AssetFile = {
   url: string
   [key: string]: unknown
 }
 
-interface AssetFields {
+type AssetFields = {
   file?: AssetFile
   title?: string
   [key: string]: unknown
 }
 
-interface Asset {
+type Asset = {
   sys: {
     id: string
   }
@@ -25,7 +27,7 @@ interface Asset {
   [key: string]: unknown
 }
 
-interface ColumnItem {
+type ColumnItem = {
   sys: {
     id: string
   }
@@ -82,19 +84,29 @@ export function GenericColumns({ data }: GenericColumnsProps) {
       itemText !== null &&
       typeof itemText === 'object' &&
       'nodeType' in itemText
-    const imageUrl =
+    const rawImageUrl =
       itemImage && 'fields' in itemImage ? (itemImage as Asset).fields?.file?.url : undefined
+    const imageUrl =
+      typeof rawImageUrl === 'string' && rawImageUrl.startsWith('//')
+        ? `https:${rawImageUrl}`
+        : rawImageUrl
 
     const itemNumber = String(index + 1).padStart(2, '0')
 
     return (
       <Box
         key={`${item.sys.id}-${index}`}
-        className='relative overflow-hidden bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 shadow-sm w-full'>
+        className='relative overflow-hidden bg-white rounded-lg border border-gray-200 shadow-sm w-full'>
         {isNumbered && <div className='text-4xl mt-4 ml-5 -mb-4 text-blue-500'>{itemNumber}</div>}
         {imageUrl && (
-          <div className='h-48 overflow-hidden bg-gray-200 dark:bg-gray-700'>
-            <img src={imageUrl} alt={itemTitle} className='w-full h-full object-cover' />
+          <div className='h-48 overflow-hidden bg-gray-200 dark:bg-gray-700 relative'>
+            <Image
+              src={String(imageUrl)}
+              alt={itemTitle}
+              fill
+              sizes='(max-width: 768px) 100vw, 33vw'
+              className='object-cover'
+            />
           </div>
         )}
         <div className='p-6'>
@@ -102,7 +114,7 @@ export function GenericColumns({ data }: GenericColumnsProps) {
             {itemTitle}
           </Heading>
           {itemText !== undefined && itemText !== null && (
-            <div className='text-gray-700 dark:text-gray-300'>
+            <div className='text-gray-700'>
               {isDocument ? (
                 documentToReactComponents(itemText as Document)
               ) : (
@@ -118,7 +130,7 @@ export function GenericColumns({ data }: GenericColumnsProps) {
   if (!items || items.length === 0) {
     return (
       <div className='w-full h-full flex items-center justify-center'>
-        <p className='text-gray-500 dark:text-gray-400'>Sem items</p>
+        <p className='text-gray-500'>Sem items</p>
       </div>
     )
   }
@@ -133,7 +145,7 @@ export function GenericColumns({ data }: GenericColumnsProps) {
           </Heading>
         )}
         {subtitle && (
-          <Paragraph className='mb-16 text-gray-600 dark:text-gray-400' fontSize='fontSizeXl'>
+          <Paragraph className='mb-16 text-gray-600' fontSize='fontSizeXl'>
             {subtitle}
           </Paragraph>
         )}
@@ -141,30 +153,9 @@ export function GenericColumns({ data }: GenericColumnsProps) {
 
       {/* Content */}
       <div className='flex-1 flex flex-col'>
-        {/* Mobile Carousel (sempre) */}
-        <div className='flex-1 flex flex-col md:hidden'>
-          <div className='flex-1 overflow-x-auto scrollbar-hide'>
-            <div className='flex gap-4 flex-nowrap p-4'>
-              {items.map((item: ColumnItem, index) => (
-                <div key={item.sys.id} className='min-w-full'>
-                  {renderItem(item, index)}
-                </div>
-              ))}
-            </div>
-          </div>
-          {/* Mobile Dots */}
-          <div className='flex justify-center gap-2 pb-4'>
-            {items.map((item, index) => (
-              <button
-                key={item.sys.id}
-                onClick={() => setCurrentIndex(index)}
-                className={`w-2 h-2 rounded-full transition ${
-                  index === currentIndex ? 'bg-primary' : 'bg-gray-300'
-                }`}
-                aria-label={`Go to item ${index + 1}`}
-              />
-            ))}
-          </div>
+        {/* Mobile Carousel (extracted) */}
+        <div className='md:hidden'>
+          <MobileCarousel items={items} renderItem={renderItem} />
         </div>
 
         {/* Desktop */}
