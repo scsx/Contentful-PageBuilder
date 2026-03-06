@@ -56,6 +56,15 @@ function getGridColsClass(itemCount: number): string {
   return gridMap[itemCount] || 'grid-cols-6'
 }
 
+function getImageHeightClass(imageHeight?: string): string {
+  const heightMap: Record<string, string> = {
+    short: 'h-32',
+    normal: 'h-48',
+    tall: 'h-80'
+  }
+  return heightMap[imageHeight || 'normal'] || 'h-48'
+}
+
 export function GenericColumns({ data }: GenericColumnsProps) {
   const [currentIndex, setCurrentIndex] = useState(0)
   const fields = data.fields as Record<string, unknown>
@@ -63,6 +72,8 @@ export function GenericColumns({ data }: GenericColumnsProps) {
   const subtitle = String(fields?.subtitle || '')
   const isCarousel = (fields?.isCarousel as boolean) ?? false
   const isNumbered = (fields?.isNumbered as boolean) ?? false
+  const imagesHeight = String(fields?.imagesHeight || 'normal')
+  const imageHeightClass = getImageHeightClass(imagesHeight)
   const items = Array.isArray(fields?.items) ? (fields.items as ColumnItem[]) : []
 
   const handlePrevious = () => {
@@ -73,12 +84,12 @@ export function GenericColumns({ data }: GenericColumnsProps) {
     setCurrentIndex((prev) => (prev === items.length - 1 ? 0 : prev + 1))
   }
 
-  const renderItem = (item: ColumnItem, index: number) => {
+const renderItem = (item: ColumnItem, index: number, imageHeightClass: string) => {
     const itemFields = item.fields as Record<string, unknown> | undefined
     const itemTitle = String(itemFields?.title || `Item ${index + 1}`)
     const itemText = itemFields?.text
     const itemImage = itemFields?.image as Asset | undefined
-
+    
     const isDocument =
       itemText !== undefined &&
       itemText !== null &&
@@ -99,7 +110,7 @@ export function GenericColumns({ data }: GenericColumnsProps) {
         className='relative overflow-hidden bg-white rounded-lg border border-gray-200 shadow-sm w-full'>
         {isNumbered && <div className='text-4xl mt-4 ml-5 -mb-4 text-blue-500'>{itemNumber}</div>}
         {imageUrl && (
-          <div className='h-48 overflow-hidden bg-gray-200 relative'>
+          <div className={`${imageHeightClass} overflow-hidden bg-gray-200 relative`}>
             <Image
               src={String(imageUrl)}
               alt={itemTitle}
@@ -155,7 +166,7 @@ export function GenericColumns({ data }: GenericColumnsProps) {
       <div className='flex-1 flex flex-col'>
         {/* Mobile Carousel (extracted) */}
         <div className='md:hidden'>
-          <MobileCarousel items={items} renderItem={renderItem} />
+          <MobileCarousel items={items} renderItem={renderItem} imageHeightClass={imageHeightClass} />
         </div>
 
         {/* Desktop */}
@@ -164,7 +175,7 @@ export function GenericColumns({ data }: GenericColumnsProps) {
             // Desktop Carousel View
             <>
               <div className='flex-1 relative flex items-center justify-center'>
-                {renderItem(items[currentIndex], currentIndex)}
+                {renderItem(items[currentIndex], currentIndex, imageHeightClass)}
                 <button
                   onClick={handlePrevious}
                   className='absolute left-4 bg-black/50 hover:bg-black/70 text-white p-2 rounded-full transition z-10'
@@ -195,7 +206,7 @@ export function GenericColumns({ data }: GenericColumnsProps) {
           ) : (
             // Desktop Grid View
             <div className={`grid gap-8 ${getGridColsClass(items.length)}`}>
-              {items.map((item: ColumnItem, index) => renderItem(item, index))}
+              {items.map((item: ColumnItem, index) => renderItem(item, index, imageHeightClass))}
             </div>
           )}
         </div>

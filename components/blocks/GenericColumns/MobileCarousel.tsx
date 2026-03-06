@@ -10,10 +10,11 @@ type ColumnItem = {
 
 interface MobileCarouselProps {
   items: ColumnItem[]
-  renderItem: (item: ColumnItem, index: number) => React.ReactNode
+  renderItem: (item: ColumnItem, index: number, imageHeightClass: string) => React.ReactNode
+  imageHeightClass: string
 }
 
-export function MobileCarousel({ items, renderItem }: MobileCarouselProps) {
+export function MobileCarousel({ items, renderItem, imageHeightClass }: MobileCarouselProps) {
   const [currentIndex, setCurrentIndex] = useState(0)
 
   if (!items || items.length === 0) return null
@@ -24,7 +25,7 @@ export function MobileCarousel({ items, renderItem }: MobileCarouselProps) {
         <div className='flex gap-4 flex-nowrap p-4'>
           {items.map((item, index) => (
             <div key={item.sys.id} className='min-w-full'>
-              {renderItem(item, index)}
+              {renderItem(item, index, imageHeightClass)}
             </div>
           ))}
         </div>
